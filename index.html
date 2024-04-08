@@ -22,9 +22,31 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" id="myBtn">Add Task</button>
     </div>
-    <!-- Todo: Create a modal with a form to add tasks -->
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Add Task</h2>    
+      <form id="myForm">
+        <div class="form-group">
+            <label  for="userName">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="title">Due Date:</label>
+            <input type="text" id="dueDate" name="dueDate" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Description:</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">

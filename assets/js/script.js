@@ -4,23 +4,89 @@ let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-
+    var i = 0;
+    return function() {
+        return i++;
+    };
 }
 
 // Todo: create a function to create a task card
+//puts card object into main website
 function createTaskCard(task) {
-
+    var card = document.createElement('div');
+    card.classList.add('task-card');
+    card.innerHTML = `
+        <div class="cardTitle">
+            <h3>${task.title}</h3>
+        </div>
+        <div class="cardDueDate">
+            <p>${task.dueDate}</p>
+        </div>
+        <div class="cardDescription">
+            By ${task.description}</p>
+        </div>` 
+        ;
+    
+        document.getElementById('todo-cards').appendChild(card);
 }
 
 // Todo: create a function to render the task list and make cards draggable
+// loop through divs. if 
 function renderTaskList() {
 
 }
 
+/*if status is todo
+    put in first column
+        if date is
+            make white
+        if date is 
+            make yellow
+        if date is 
+            make red
+ if status is active
+    put in second column
+        if date is
+            make white
+        if date is 
+            make yellow
+        if date is 
+            make red
+if status is done
+    put in third column
+        make white
+
+*/
+
 // Todo: create a function to handle adding a new task
+//div for popup box
 function handleAddTask(event){
 
 }
+
+document.addEventListener("DOMContentLoaded",function(event){
+// Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    // When the user clicks on the button, open the modal
+    document.getElementById("myBtn").onclick = function() {
+        modal.style.display = "block";
+        };
+
+    // Get the <span> element that closes the modal
+    // When the user clicks on <span> (x), close the modal
+    document.getElementsByClassName("close")[0].onclick = function() {
+        modal.style.display = "none";
+        };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
+});
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
