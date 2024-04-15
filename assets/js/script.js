@@ -97,6 +97,19 @@ document.addEventListener("DOMContentLoaded",function(event){
         handleAddTask(event)
     });
 
+    // $('.datepicker').datepicker({
+    //     clearBtn: true,
+    //     format: "dd/mm/yyyy"
+    // });
+
+    // $("#dueDate").click(function(){
+    //     $(".datepicker").show();
+    // });
+
+    $( function() {
+        $( "#dueDate" ).datepicker();
+      } );
+
     // Get the button that opens the modal
     // When the user clicks on the button, open the modal
     document.getElementById("myBtn").onclick = function() {

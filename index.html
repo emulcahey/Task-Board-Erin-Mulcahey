@@ -25,6 +25,7 @@
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" id="myBtn">Add Task</button>
     </div>
 
+  //pop up box that asks for new task info
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
@@ -36,7 +37,9 @@
         </div>
         <div class="form-group">
             <label for="title">Due Date:</label>
-            <input type="text" id="dueDate" name="dueDate" required>
+            <div>
+              <p><input type="text" id="dueDate"></p>
+            </div>
         </div>
         <div class="form-group">
             <label for="content">Description:</label>
