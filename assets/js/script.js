@@ -61,12 +61,41 @@ if status is done
 // Todo: create a function to handle adding a new task
 //div for popup box
 function handleAddTask(event){
+    event.preventDefault(); // Prevent form submission refresh
 
+    // Get form values
+    var title = document.getElementById('title').value;
+    var dueDate = document.getElementById('dueDate').value;
+    var description = document.getElementById('description').value;
+
+    const formItems = {
+        "title": title,
+        "dueDate": dueDate,
+        "description": description
+    }
+
+    //attach specific number to each form created
+    localStorage.setItem(`formItems_${localStorage.length}`, JSON.stringify(formItems));
+
+    // Clear the form fields
+    document.getElementById('title').value = '';
+    document.getElementById('dueDate').value = '';
+    document.getElementById('description').value = '';
+
+    //close form box
+    document.getElementById("myModal").style.display = "none";
+
+    console.log(localStorage);
 }
 
 document.addEventListener("DOMContentLoaded",function(event){
 // Get the modal
     var modal = document.getElementById("myModal");
+
+    //takes form entries and writes to local memory
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        handleAddTask(event)
+    });
 
     // Get the button that opens the modal
     // When the user clicks on the button, open the modal
