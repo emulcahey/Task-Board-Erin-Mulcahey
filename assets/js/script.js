@@ -12,10 +12,11 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 //puts card object into main website
-function createTaskCard(task) {
-    var card = document.createElement('div');
-    card.classList.add('task-card');
-    card.innerHTML = `
+//adds single task card to the DOM from one local storage item
+function createTaskCard(key, task) {
+    var cardEl = document.createElement('div');
+    cardEl.id = key;
+    cardEl.innerHTML = `
         <div class="cardTitle">
             <h3>${task.title}</h3>
         </div>
@@ -26,40 +27,49 @@ function createTaskCard(task) {
             By ${task.description}</p>
         </div>` 
         ;
-    
-        document.getElementById('todo-cards').appendChild(card);
+        cardEl.classList.add('task-card');
+        cardEl.style.cssText="width:fit-content";
+        return cardEl;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 // loop through divs. if 
+// adds each card to the DOM
 function renderTaskList() {
-
+    const entries = Object.entries(localStorage)
+        for(const [key, value] of entries){ 
+        var cardData = JSON.parse(value)
+        var cardEl = createTaskCard(key, cardData);
+        if(cardData.status == "todo"){
+            $('#todo-cards').css({top: 0,left: 0}).append(cardEl);
+            if(dayjs(cardData.dueDate).diff(dayjs(), 'day') > 1){
+                console.log("cardEl" , cardEl);
+                console.log("cardData" , cardData);
+                cardEl.style.backgroundColor = "#ffffff"; //white
+            }else if(dayjs(cardData.dueDate).diff(dayjs(), 'day') < 0){
+                cardEl.style.backgroundColor = "#ff0000"; //red
+            }else{
+                cardEl.style.backgroundColor = "#FFFF00"; //yellow
+            }
+        }else if(cardData.status == "inProgress"){
+            document.getElementById('in-progress-cards').appendChild(cardEl);
+            if(dayjs(cardData.dueDate).diff(dayjs(), 'day') > 1){
+                cardEl.style.backgroundColor = "#ffffff"; //white
+            }else if(dayjs(cardData.dueDate).diff(dayjs(), 'day') < 0){
+                cardEl.style.backgroundColor = "#ff0000"; //red
+            }else{
+                cardEl.style.backgroundColor = "#FFFF00"; //yellow
+            }
+        }else{
+            document.getElementById('done-cards').appendChild(cardEl);
+            cardEl.style.backgroundColor = "#ffffff"; //white
+        }
+    };
 }
-
-/*if status is todo
-    put in first column
-        if date is
-            make white
-        if date is 
-            make yellow
-        if date is 
-            make red
- if status is active
-    put in second column
-        if date is
-            make white
-        if date is 
-            make yellow
-        if date is 
-            make red
-if status is done
-    put in third column
-        make white
-
-*/
 
 // Todo: create a function to handle adding a new task
 //div for popup box
+// this is just data in local storage
 function handleAddTask(event){
     event.preventDefault(); // Prevent form submission refresh
 
@@ -71,7 +81,8 @@ function handleAddTask(event){
     const formItems = {
         "title": title,
         "dueDate": dueDate,
-        "description": description
+        "description": description,
+        "status": "todo"
     }
 
     //attach specific number to each form created
@@ -97,15 +108,7 @@ document.addEventListener("DOMContentLoaded",function(event){
         handleAddTask(event)
     });
 
-    // $('.datepicker').datepicker({
-    //     clearBtn: true,
-    //     format: "dd/mm/yyyy"
-    // });
-
-    // $("#dueDate").click(function(){
-    //     $(".datepicker").show();
-    // });
-
+    //allows popup for date picker in when clicking into the date entry line
     $( function() {
         $( "#dueDate" ).datepicker();
       } );
@@ -142,5 +145,45 @@ function handleDrop(event, ui) {
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+    renderTaskList();
+    $( ".task-card" ).draggable({
+        scope: 'tasks',
+        revertDuration: 100,
+        start: function( event, ui ) {
+            //Reset
+            $( ".task-card" ).draggable( "option", "revert", true );
+            $('.result').html('-');
+        }
+    });
+    
+    $( ".dragArea" ).droppable({
+        
+        scope: 'tasks',
+        //based on where card was dropped, run through date logic if not in done,if you are in done, set status to done.
+        drop: function( event, ui ) {
+            var cardKey = $(ui.draggable)[0].attributes["id"].value
+            const task = JSON.parse(localStorage.getItem(cardKey))
+            console.log("task", task)
+            console.log("this", this)
+            var area = $(this).find(".area")
+            const areaid = area[0].attributes["id"].value
+            console.log("area", areaid)
+            
+            if(areaid === "todo-cards"){
+                task.status = "todo"
+            } else if(areaid === "in-progress-cards"){
+                task.status = "inProgress"
+            } else
+                task.status = "done"
+
+            localStorage.setItem(cardKey, JSON.stringify(task));    
+            var box = $(ui.draggable).html()     
+            $( ".box" ).draggable( "option", "revert", false );
+            
+
+            //Realign item
+            $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+        }
+    })
 
 });

@@ -9,6 +9,10 @@ body {
 
 .task-card {
   margin: 0 auto;
+  background-color: #ffffff;
+  text-align: center;
+  z-index: 2;
+  /* width: auto; */
 }
 
 .task-card:hover {
@@ -16,17 +20,31 @@ body {
 }
 
 .cardTitle {
-
+  width: 100%;
 }
 
 .cardDueDate {
-
+  width: 100%;
 }
 
 .cardDescription {
-
+  width: 100%;
 }
  
+.dragArea {
+  /* height: 200px; */
+  align-self: stretch;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  border: 1px solid #ddd;
+  box-shadow: 3px 3px 6px 3px rgba(0,0,0,0.06) */
+}
+.area {
+  position:absolute;
+  margin: 0 auto;
+}
+
 .form-group {
   margin-bottom: 15px;
 }
@@ -57,7 +75,7 @@ body {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 10; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
