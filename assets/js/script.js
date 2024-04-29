@@ -25,7 +25,7 @@ function createTaskCard(key, task) {
             <p>${task.dueDate}</p>
         </div>
         <div class="cardDescription">
-            By ${task.description}</p>
+            <p>${task.description}</p>
         </div>` 
         ;
         cardEl.classList.add('task-card');
@@ -98,6 +98,8 @@ function handleAddTask(event){
     //close form box
     document.getElementById("myModal").style.display = "none";
 
+    location.reload();
+
     console.log(localStorage);
 }
 
@@ -152,18 +154,17 @@ function handleDrop(event, ui) {
         drop: function( event, ui ) {
             var cardKey = $(ui.draggable)[0].attributes["id"].value
             const task = JSON.parse(localStorage.getItem(cardKey))
-            console.log("task", task)
-            console.log("this", this)
             var area = $(this).find(".area")
             const areaid = area[0].attributes["id"].value
-            console.log("area", areaid)
             
             if(areaid === "todo-cards"){
                 task.status = "todo"
             } else if(areaid === "in-progress-cards"){
                 task.status = "inProgress"
-            } else
+            } else {
                 task.status = "done"
+                $(ui.draggable)[0].style.backgroundColor = "#ffffff"
+            }
 
             localStorage.setItem(cardKey, JSON.stringify(task));    
             var box = $(ui.draggable).html()     
