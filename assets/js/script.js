@@ -17,6 +17,7 @@ function createTaskCard(key, task) {
     var cardEl = document.createElement('div');
     cardEl.id = key;
     cardEl.innerHTML = `
+        <button id=closeButton class="close">X</button>    
         <div class="cardTitle">
             <h3>${task.title}</h3>
         </div>
@@ -29,6 +30,7 @@ function createTaskCard(key, task) {
         ;
         cardEl.classList.add('task-card');
         cardEl.style.cssText="width:fit-content";
+        $('#closeButton').on('click', handleDeleteTask);
         return cardEl;
 }
 
@@ -134,28 +136,15 @@ document.addEventListener("DOMContentLoaded",function(event){
 });
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event){
-
+function handleDeleteTask(event, ui){
+    var cardKey = $(this).parent('.task-card')
+    var cardId = cardKey[0].attributes[0].value
+        localStorage.removeItem(cardId);
+        cardKey.remove();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-
-}
-
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {
-    renderTaskList();
-    $( ".task-card" ).draggable({
-        scope: 'tasks',
-        revertDuration: 100,
-        start: function( event, ui ) {
-            //Reset
-            $( ".task-card" ).draggable( "option", "revert", true );
-            $('.result').html('-');
-        }
-    });
-    
     $( ".dragArea" ).droppable({
         
         scope: 'tasks',
@@ -185,5 +174,21 @@ $(document).ready(function () {
             $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
         }
     })
+}
+
+// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
+$(document).ready(function () {
+    renderTaskList();
+    $( ".task-card" ).draggable({
+        scope: 'tasks',
+        revertDuration: 100,
+        start: function( event, ui ) {
+            //Reset
+            $( ".task-card" ).draggable( "option", "revert", true );
+            $('.result').html('-');
+        }
+    });
+    
+    handleDrop();
 
 });
