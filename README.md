@@ -14,7 +14,8 @@ Just below the header of the website, there is a green "Add Task" button. When y
 
 To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README using the following syntax:
 
-![alt text](assets/images/screenshot.png)
+![Image of kanban board with multiple tasks listed in 3 different categories: to do, in progress, and done.](images/Kanban_screenshot.png)
+![Image of kanban board add a new task window. Has sections to add a title, due date, and description.](images/Kanban_addtask_screenshot.png)
 
 ## Credits
 
