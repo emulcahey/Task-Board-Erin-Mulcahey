@@ -12,7 +12,7 @@ body {
   background-color: #ffffff;
   text-align: center;
   z-index: 2;
-  /* width: auto; */
+  border-radius: 10px;
 }
 
 .task-card:hover {
@@ -25,6 +25,7 @@ body {
 
 .cardDueDate {
   width: 100%;
+  font-style: italic;
 }
 
 .cardDescription {
@@ -32,7 +33,6 @@ body {
 }
  
 .dragArea {
-  /* height: 200px; */
   align-self: stretch;
   display: inline-block;
   vertical-align: top;
@@ -102,8 +102,10 @@ body {
 .close {
   color: #aaa;
   float: right;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
+  margin: 4px;
+  border-radius: 10px;
 }
 
 .close:hover,

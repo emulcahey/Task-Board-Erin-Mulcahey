@@ -45,8 +45,6 @@ function renderTaskList() {
         if(cardData.status == "todo"){
             $('#todo-cards').css({top: 0,left: 0}).append(cardEl);
             if(dayjs(cardData.dueDate).diff(dayjs(), 'day') > 1){
-                console.log("cardEl" , cardEl);
-                console.log("cardData" , cardData);
                 cardEl.style.backgroundColor = "#ffffff"; //white
             }else if(dayjs(cardData.dueDate).diff(dayjs(), 'day') < 0){
                 cardEl.style.backgroundColor = "#ff0000"; //red
